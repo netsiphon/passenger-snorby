@@ -12,14 +12,13 @@ ENV DB_PASSWORD=password
 ENV SNORBY_CONFIG=$SNORBY_PATH/config/snorby_config.yml
 
 # Update only please
-RUN \
-    yum update -y
+RUN yum update -y
 # Install Required Packages from Yum
-RUN \
-    yum install -y epel-release yum-utils
+RUN yum install -y epel-release yum-utils
 RUN \
     yum install -y pygpgme curl wget tar git wkhtmltopdf libxml2-devel libxslt-devel && \
-    yum install -y httpd && \
+    yum install -y httpd
+RUN \
     # Passenger Repo
     sudo curl --fail -sSLo /etc/yum.repos.d/passenger.repo https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo && \
     sudo yum install -y mod_passenger
