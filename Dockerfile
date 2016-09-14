@@ -9,7 +9,7 @@ ENV DB_HOST=localhost
 ENV DB_PORT=3306
 ENV DB_USER=snorby
 ENV DB_PASSWORD=password
-ENV SNORBY_CONFIG=/usr/local/snorby/config/snorby_config.yml
+ENV SNORBY_CONFIG=$SNORBY_PATH/config/snorby_config.yml
 
 # Update only please
 RUN \
