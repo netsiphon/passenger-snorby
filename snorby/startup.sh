@@ -11,6 +11,8 @@ sed -i 's/$DB_PORT/'$DB_PORT'/g' $SNORBY_PATH/config/database.yml
 sed -i 's/$DB_USER/'$DB_USER'/g' $SNORBY_PATH/config/database.yml
 sed -i 's/$DB_PASSWORD/'$DB_PASSWORD'/g' $SNORBY_PATH/config/database.yml
 
+sed -i 's/$SNORBY_HOST/'$SNORBY_HOST'/g' /etc/httpd/conf.d/passenger.conf
+sed -i 's/$SNORBY_PORT/'$SNORBY_PORT'/g' /etc/httpd/conf.d/passenger.conf
 #Snort Rules at some point...
 
 #Setup Snorby
