@@ -15,14 +15,14 @@ sed -i 's/$DB_PASSWORD/'$DB_PASSWORD'/g' $SNORBY_PATH/config/database.yml
 
 #Setup Snorby
 cd $SNORBY_PATH
-/bin/bash -l -c bundle exec rake snorby:setup
+/bin/bash -l -c "bundle exec rake snorby:setup"
 
-SNORBY_START="rails server -e production"
 
 # GO!
 cd $SNORBY_PATH
-/bin/bash -l -c $SNORBY_START
+#Not necessary with Passenger!
+#/bin/bash -l -c "rails server -e production"
 
-#Delayed Jobs start
+#Delayed Jobs start still needed though
 /bin/bash -l -c "rails runner Snorby::Worker.start"
 /bin/bash -l -c "rails runner Snorby Cache Jobs"
