@@ -32,13 +32,13 @@ RUN \
     source /etc/profile.d/rvm.sh && \
     #Ruby Path
     export PATH=$PATH:/usr/local/rvm/rubies/ruby-1.9.3-p551/bin
-RUN /bin/sh gem update --system && \
-    /bin/sh gem install bundler
+RUN /bin/bash -l -c "gem update --system" && \
+    /bin/bash -l -c "gem install bundler"
 RUN \
     # Get Latest Snorby
     git clone git://github.com/Snorby/snorby.git /usr/local/snorby && \
     cd /usr/local/snorby && \
-    /bin/sh bundle install
+    /bin/bash -l -c "bundle install"
 
 COPY snorby /
 
