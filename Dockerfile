@@ -38,7 +38,7 @@ RUN \
     # Get Latest Snorby
     git clone git://github.com/Snorby/snorby.git /usr/local/snorby && \
     cd /usr/local/snorby && \
-    bundle install
+    /bin/bash -l -c bundle install
 
 COPY snorby /
 
