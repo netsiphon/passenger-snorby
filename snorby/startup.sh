@@ -21,8 +21,8 @@ SNORBY_START="rails server -e production"
 
 # GO!
 cd $SNORBY_PATH
-$SNORBY_START
+/bin/bash -l -c $SNORBY_START
 
 #Delayed Jobs start
-/bin/bash -l -c rails runner "Snorby::Worker.start"
-/bin/bash -l -c rails runner "Snorby Cache Jobs"
+/bin/bash -l -c "rails runner Snorby::Worker.start"
+/bin/bash -l -c "rails runner Snorby Cache Jobs"
