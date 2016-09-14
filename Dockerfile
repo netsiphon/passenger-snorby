@@ -33,13 +33,13 @@ RUN \
     #Ruby Path
     #export PATH=$PATH:/usr/local/rvm/rubies/ruby-1.9.3-p551/bin
     export PATH=$PATH:/usr/local/rvm/rubies/ruby-2.2.1-p85/bin
-RUN /bin/bash -l -c "gem update --system" && \
-    /bin/bash -l -c "gem install bundler"
+RUN /bin/bash -l -c "gem update --system --no-document" && \
+    /bin/bash -l -c "gem install bundler --no-document"
 RUN \
     # Get Latest Snorby
     git clone git://github.com/Snorby/snorby.git /usr/local/snorby && \
     cd /usr/local/snorby && \
-    /bin/bash -l -c bundle install
+    /bin/bash -l -c bundle install --no-document
 
 COPY snorby /
 
