@@ -20,8 +20,8 @@ RUN \
     yum install -y httpd
 RUN \
     # Passenger Repo
-    sudo curl --fail -sSLo /etc/yum.repos.d/passenger.repo https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo && \
-    sudo yum install -y mod_passenger
+    sudo curl --fail -sSLo /etc/yum.repos.d/passenger.repo https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
+RUN sudo yum install -y mod_passenger
 # Setup Snorby 
 RUN \
     sudo systemctl restart httpd && \
