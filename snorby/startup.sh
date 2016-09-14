@@ -1,6 +1,8 @@
 #!/bin/bash
 #https://github.com/Snorby/snorby/blob/master/README.md
 
+export PATH=$PATH:/usr/local/rvm/rubies/ruby-2.2.1-p85/bin
+
 mysql -u $DB_USER -p $DB_PASSWORD -h $DB_HOST < $SNORBY_PATH/snorby_setup.sql
 
 #Modify Configs
