@@ -31,8 +31,8 @@ RUN \
     source /usr/local/rvm/scripts/rvm && \
     source /etc/profile.d/rvm.sh && \
     #Ruby Path
-    export PATH=$PATH:/usr/local/rvm/rubies/ruby-1.9.3-p551/bin && \
-    gem update --system && \
+    export PATH=$PATH:/usr/local/rvm/rubies/ruby-1.9.3-p551/bin
+RUN gem update --system && \
     gem install bundler
 RUN \
     # Get Latest Snorby
