@@ -11,9 +11,11 @@ ENV DB_USER=snorby
 ENV DB_PASSWORD=password
 ENV SNORBY_CONFIG=/usr/local/snorby/config/snorby_config.yml
 
+# Update only please
+RUN \
+    yum update -y
 # Install Required Packages from Yum
 RUN \
-    yum update -y && \
     yum install -y epel-release yum-utils && \
     yum install -y pygpgme curl wget tar git wkhtmltopdf libxml2-devel libxslt-devel && \
     yum install -y httpd && \
