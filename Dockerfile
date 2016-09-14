@@ -18,7 +18,7 @@ RUN yum update -y
 # Install Required Packages from Yum
 RUN yum install -y epel-release yum-utils
 RUN \
-    yum install -y pygpgme curl wget tar git wkhtmltopdf libxml2-devel libxslt-devel mariadb-devel && \
+    yum install -y pygpgme curl wget tar git wkhtmltopdf libxml2-devel libxslt-devel mariadb mariadb-devel && \
     yum install -y httpd
 RUN \
     # Passenger Repo
