@@ -27,12 +27,12 @@ RUN apachectl -k graceful
 RUN \
     # Prepare ruby for Snorby
     gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 && \
-    curl -sSL https://get.rvm.io | bash -s stable --ruby=1.9.3 && \
+    curl -sSL https://get.rvm.io | bash -s stable --ruby=2.2.1 && \
     source /usr/local/rvm/scripts/rvm && \
     source /etc/profile.d/rvm.sh && \
     #Ruby Path
-    export PATH=$PATH:/usr/local/rvm/rubies/ruby-1.9.3-p551/bin
-    #export PATH=$PATH:/usr/local/rvm/rubies/ruby-1.9.2/bin
+    #export PATH=$PATH:/usr/local/rvm/rubies/ruby-1.9.3-p551/bin
+    export PATH=$PATH:/usr/local/rvm/rubies/ruby-2.2.1-p85/bin
 RUN /bin/bash -l -c "gem update --system" && \
     /bin/bash -l -c "gem install bundler"
 RUN \
