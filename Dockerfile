@@ -43,7 +43,7 @@ RUN \
 
 COPY snorby /
 
-VOLUME [ "{$volume-container}:{$SNORBY_PATH}" ]
+VOLUMES {$VOLUME_CONTAINER}:{$SNORBY_PATH}
 
 EXPOSE $SNORBY_PORT
 
