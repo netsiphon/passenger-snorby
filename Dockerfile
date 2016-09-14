@@ -33,10 +33,12 @@ RUN \
     #Ruby Path
     export PATH=$PATH:/usr/local/rvm/rubies/ruby-1.9.3-p551/bin && \
     gem update --system && \
-    gem install bundler && \
+    gem install bundler
+RUN \
     # Get Latest Snorby
     git clone git://github.com/Snorby/snorby.git /usr/local/snorby && \
-    cd /usr/local/snorby && bundle install
+    cd /usr/local/snorby && \
+    bundle install
 
 COPY snorby /
 
