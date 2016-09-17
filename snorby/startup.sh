@@ -3,7 +3,10 @@
 
 export PATH=$PATH:/usr/local/rvm/rubies/ruby-2.2.1-p85/bin
 
-mysql -u $DB_USER -p $DB_PASSWORD -h $DB_HOST < $SNORBY_PATH/snorby_setup.sql
+mysql -u $DB_USER -p $DB_PASSWORD -h $DB_HOST < \
+CREATE IF NOT EXISTS DATABASE snorby; \
+GRANT ALL on snorby.* to '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'; \
+FLUSH PRIVILEGES;
 
 #Modify Configs
 sed -i 's/$DB_HOST/'$DB_HOST'/g' $SNORBY_PATH/config/database.yml
@@ -13,6 +16,8 @@ sed -i 's/$DB_PASSWORD/'$DB_PASSWORD'/g' $SNORBY_PATH/config/database.yml
 
 sed -i 's/$SNORBY_HOST/'$SNORBY_HOST'/g' /etc/httpd/conf.d/passenger.conf
 sed -i 's/$SNORBY_PORT/'$SNORBY_PORT'/g' /etc/httpd/conf.d/passenger.conf
+sed -i 's/$SNORBY_PATH/'$SNORBY_PATH'/g' /etc/httpd/conf.d/passenger.conf
+
 #Snort Rules at some point...
 
 #Setup Snorby
