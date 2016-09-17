@@ -2,14 +2,14 @@ FROM centos:centos7
 MAINTAINER Joseph Kennedy <joseph@netsiphon.com>
 
 #Environment Variables
-ENV SNORBY_PATH=/usr/local/snorby
-ENV SNORBY_PORT=9443
-ENV SNORBY_HOSTNAME=localhost
-ENV DB_PORT=3306
-ENV DB_HOST=mysql
-ENV DB_USER=snorby
-ENV DB_PASSWORD=password
-ENV SNORBY_CONFIG=$SNORBY_PATH/config/snorby_config.yml
+ENV SNORBY_PATH="/usr/local/snorby"
+ENV SNORBY_PORT="9443"
+ENV SNORBY_HOSTNAME="localhost"
+ENV DB_PORT="3306"
+ENV DB_HOST=MYSQL
+ENV DB_USER="snorby"
+ENV DB_PASSWORD="password"
+ENV SNORBY_CONFIG="$SNORBY_PATH/config/snorby_config.yml"
 ENV VOLUME_CONTAINER=""
 
 
@@ -44,8 +44,6 @@ RUN \
     /bin/bash -l -c bundle install --no-document
 
 COPY snorby /
-
-VOLUME {$VOLUME_CONTAINER}{$VOLUME_CONTAINER+:}{$SNORBY_PATH}
 
 EXPOSE $SNORBY_PORT
 
