@@ -3,10 +3,10 @@
 
 export PATH=$PATH:/usr/local/rvm/rubies/ruby-2.2.1-p85/bin
 
-mysql -u $DB_USER -p $DB_PASSWORD -h $DB_HOST < \
+mysql -u $DB_USER -p $DB_PASSWORD -h $DB_HOST < "\
 CREATE IF NOT EXISTS DATABASE snorby; \
 GRANT ALL on snorby.* to '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'; \
-FLUSH PRIVILEGES;
+FLUSH PRIVILEGES;"
 
 #Modify Configs
 sed -i 's/$DB_HOST/'$DB_HOST'/g' $SNORBY_PATH/config/database.yml
