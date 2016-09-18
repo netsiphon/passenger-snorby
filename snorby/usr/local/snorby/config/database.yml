@@ -7,7 +7,7 @@ snorby: &snorby
   adapter: mysql
   username: "$DB_USER"
   password: "$DB_PASSWORD"
-  host: "$DB_HOST:$DB_PORT"
+  host: "$DB_HOST"
 
 development:
   database: snorby

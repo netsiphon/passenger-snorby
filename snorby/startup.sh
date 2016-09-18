@@ -5,7 +5,9 @@ export PATH=$PATH:/usr/local/rvm/rubies/ruby-2.2.1-p85/bin
 
 cat /etc/hosts
 
-mysql -u $DB_USER -p $DB_PASSWORD -h $DB_HOST -e " \
+export MYSQL_PWD="$DB_PASSWORD"
+
+mysql -u $DB_USER -h $DB_HOST -e " \
 CREATE IF NOT EXISTS DATABASE snorby; \
 GRANT ALL on snorby.* to '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'; \
 FLUSH PRIVILEGES;"
