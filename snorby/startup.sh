@@ -37,3 +37,6 @@ cd $SNORBY_PATH
 #Delayed Jobs start still needed though
 /bin/bash -l -c "rails runner Snorby::Worker.start"
 /bin/bash -l -c "rails runner Snorby Cache Jobs"
+
+# Run HTTPD
+/bin/bash -l -c "httpd-foreground"
