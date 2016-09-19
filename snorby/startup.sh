@@ -3,9 +3,9 @@
 
 export PATH=$PATH:/usr/local/rvm/rubies/ruby-2.2.1-p85/bin
 
-cat /etc/hosts
-
-export MYSQL_PWD="$DB_PASSWORD"
+#Password storage
+echo "[client]\npassword=$DB_PASSWORD" > ~/.my.cnf
+chmod 600 ~/.my.cnf
 
 mysql -u $DB_USER -h $DB_HOST -e " \
 CREATE IF NOT EXISTS DATABASE snorby; \
