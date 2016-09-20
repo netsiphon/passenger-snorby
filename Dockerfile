@@ -4,7 +4,7 @@ MAINTAINER Joseph Kennedy <joseph@netsiphon.com>
 #Environment Variables
 ENV SNORBY_PATH="/usr/local/snorby"
 ENV SNORBY_PORT="9443"
-ENV SNORBY_HOSTNAME="localhost"
+ENV SNORBY_HOST="localhost"
 ENV DB_PORT="3306"
 ENV DB_HOST=mysql
 ENV DB_USER="snorby"
