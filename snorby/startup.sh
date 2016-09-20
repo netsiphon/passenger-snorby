@@ -1,9 +1,9 @@
 #!/bin/bash
-#https://github.com/Snorby/snorby/blob/master/README.md
+# https://github.com/Snorby/snorby/blob/master/README.md
 
 export PATH=$PATH:/usr/local/rvm/rubies/ruby-2.2.1-p85/bin
 
-#Password storage
+# Password storage
 echo "[client]\npassword=$DB_PASSWORD" > ~/.my.cnf
 chmod 600 ~/.my.cnf
 
@@ -12,25 +12,29 @@ CREATE IF NOT EXISTS DATABASE snorby; \
 GRANT ALL on snorby.* to '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'; \
 FLUSH PRIVILEGES;"
 
-#Modify Configs
-sed -i 's/$DB_HOST/'$DB_HOST'/g' $SNORBY_PATH/config/database.yml
-sed -i 's/$DB_PORT/'$DB_PORT'/g' $SNORBY_PATH/config/database.yml
-sed -i 's/$DB_USER/'$DB_USER'/g' $SNORBY_PATH/config/database.yml
-sed -i 's/$DB_PASSWORD/'$DB_PASSWORD'/g' $SNORBY_PATH/config/database.yml
+# Modify Configs
 
-sed -i 's/$SNORBY_HOST/'$SNORBY_HOST'/g' /etc/httpd/conf.d/passenger.conf
-sed -i 's/$SNORBY_PORT/'$SNORBY_PORT'/g' /etc/httpd/conf.d/passenger.conf
-sed -i 's/$SNORBY_PATH/'$SNORBY_PATH'/g' /etc/httpd/conf.d/passenger.conf
+# database.yml
+sed_output="$(cat "$SNORBY_PATH/config/database.yml" | sed 's/$DB_HOST/'$DB_HOST'/g' | \
+sed 's/$DB_PORT/'$DB_PORT'/g' | sed 's/$DB_USER/'$DB_USER'/g' | \
+sed 's/$DB_PASSWORD/'$DB_PASSWORD'/g')"
+echo "$sed_output" > "$SNORBY_PATH/config/database.yml"
+sed_output=""
+
+# passenger.conf
+sed_output="$(cat "/etc/httpd/conf.d/passenger.conf" | sed 's/$SNORBY_HOST/'$SNORBY_HOST'/g' | \
+sed 's/$SNORBY_PORT/'$SNORBY_PORT'/g' | sed 's/$SNORBY_PATH/'$SNORBY_PATH'/g')"
+echo "$sed_output" > "/etc/httpd/conf.d/passenger.conf"
+sed_output=""
 
 #Snort Rules at some point...
 
 #Setup Snorby
-cd $SNORBY_PATH
+cd "$SNORBY_PATH"
 /bin/bash -l -c "bundle exec rake snorby:setup"
 
-
 # GO!
-cd $SNORBY_PATH
+cd "$SNORBY_PATH"
 #Not necessary with Passenger!
 #/bin/bash -l -c "rails server -e production"
 
