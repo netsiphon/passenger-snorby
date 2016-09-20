@@ -15,15 +15,15 @@ FLUSH PRIVILEGES;"
 # Modify Configs
 
 # database.yml
-sed_output="$(cat "$SNORBY_PATH/config/database.yml" | sed 's/$DB_HOST/'$DB_HOST'/g' | \
-sed 's/$DB_PORT/'$DB_PORT'/g' | sed 's/$DB_USER/'$DB_USER'/g' | \
-sed 's/$DB_PASSWORD/'$DB_PASSWORD'/g')"
+sed_output="$(cat "$SNORBY_PATH/config/database.yml" | sed 's|$DB_HOST|'$DB_HOST'|g' | \
+sed 's|$DB_PORT|'$DB_PORT'|g' | sed 's|$DB_USER|'$DB_USER'|g' | \
+sed 's|$DB_PASSWORD|'$DB_PASSWORD'|g')"
 echo "$sed_output" > "$SNORBY_PATH/config/database.yml"
 sed_output=""
 
 # passenger.conf
-sed_output="$(cat "/etc/httpd/conf.d/passenger.conf" | sed 's/$SNORBY_HOST/'$SNORBY_HOST'/g' | \
-sed 's/$SNORBY_PORT/'$SNORBY_PORT'/g' | sed 's/$SNORBY_PATH/'$SNORBY_PATH'/g')"
+sed_output="$(cat "/etc/httpd/conf.d/passenger.conf" | sed 's|$SNORBY_HOST|'$SNORBY_HOST'|g' | \
+sed 's|$SNORBY_PORT|'$SNORBY_PORT'|g' | sed 's|$SNORBY_PATH|'$SNORBY_PATH'|g')"
 echo "$sed_output" > "/etc/httpd/conf.d/passenger.conf"
 sed_output=""
 
