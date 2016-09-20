@@ -4,7 +4,7 @@
 export PATH=$PATH:/usr/local/rvm/rubies/ruby-2.2.1-p85/bin
 
 # Password storage
-echo "[client]\npassword=$DB_PASSWORD" > ~/.my.cnf
+printf "[client]\npassword=%s" "$DB_PASSWORD" > ~/.my.cnf
 chmod 600 ~/.my.cnf
 
 mysql -u $DB_USER -h $DB_HOST -e " \
@@ -18,27 +18,32 @@ FLUSH PRIVILEGES;"
 sed_output="$(cat "$SNORBY_PATH/config/database.yml" | sed 's|$DB_HOST|'$DB_HOST'|g' | \
 sed 's|$DB_PORT|'$DB_PORT'|g' | sed 's|$DB_USER|'$DB_USER'|g' | \
 sed 's|$DB_PASSWORD|'$DB_PASSWORD'|g')"
-echo "$sed_output" > "$SNORBY_PATH/config/database.yml"
+printf "%s" "$sed_output" > "$SNORBY_PATH/config/database.yml"
 sed_output=""
 
 # passenger.conf
 sed_output="$(cat "/etc/httpd/conf.d/passenger.conf" | sed 's|$SNORBY_HOST|'$SNORBY_HOST'|g' | \
 sed 's|$SNORBY_PORT|'$SNORBY_PORT'|g' | sed 's|$SNORBY_PATH|'$SNORBY_PATH'|g')"
-echo "$sed_output" > "/etc/httpd/conf.d/passenger.conf"
+printf "%s" "$sed_output" > "/etc/httpd/conf.d/passenger.conf"
 sed_output=""
 
-#Snort Rules at some point...
+# PassengerRoot
+passenger_root="$("passenger-config --root")"
+# Check httpd config for value and remove any existing
+sed_output="$(cat "/etc/httpd/conf/httpd.conf" | sed 's|^PassengerRoot.*$||g')"
+printf "%s\nPassengerRoot %s" "$sed_output" "$passenger_root"  > "/etc/httpd/conf/httpd.conf"
+sed_output=""
 
-#Setup Snorby
+# Setup Snorby
 cd "$SNORBY_PATH"
 /bin/bash -l -c "bundle exec rake snorby:setup"
 
 # GO!
 cd "$SNORBY_PATH"
-#Not necessary with Passenger!
+# Not necessary with Passenger!
 #/bin/bash -l -c "rails server -e production"
 
-#Delayed Jobs start still needed though
+# Delayed Jobs start still needed though
 /bin/bash -l -c "rails runner Snorby::Worker.start"
 /bin/bash -l -c "rails runner Snorby Cache Jobs"
 
