@@ -39,4 +39,4 @@ cd $SNORBY_PATH
 /bin/bash -l -c "rails runner Snorby Cache Jobs"
 
 # Run HTTPD
-/bin/bash -l -c "httpd-foreground"
+/bin/bash -l -c "/usr/sbin/httpd -D FOREGROUND"
