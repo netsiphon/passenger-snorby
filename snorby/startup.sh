@@ -21,17 +21,14 @@ sed 's|$DB_PASSWORD|'$DB_PASSWORD'|g')"
 printf "%s" "$sed_output" > "$SNORBY_PATH/config/database.yml"
 sed_output=""
 
+# PassengerRoot
+PASSENGER_ROOT="$(passenger-config --root)"
+
 # passenger.conf
 sed_output="$(cat "/etc/httpd/conf.d/passenger.conf" | sed 's|$SNORBY_HOST|'$SNORBY_HOST'|g' | \
-sed 's|$SNORBY_PORT|'$SNORBY_PORT'|g' | sed 's|$SNORBY_PATH|'$SNORBY_PATH'|g')"
+sed 's|$SNORBY_PORT|'$SNORBY_PORT'|g' | sed 's|$SNORBY_PATH|'$SNORBY_PATH'|g' | \
+sed 's|$PASSENGER_ROOT|'$PASSENGER_ROOT'|g')"
 printf "%s" "$sed_output" > "/etc/httpd/conf.d/passenger.conf"
-sed_output=""
-
-# PassengerRoot
-passenger_root="$(passenger-config --root)"
-# Check httpd config for value and remove any existing
-sed_output="$(cat "/etc/httpd/conf/httpd.conf" | sed 's|^PassengerRoot.*$||g')"
-printf "%s\nPassengerRoot %s" "$sed_output" "$passenger_root"  > "/etc/httpd/conf/httpd.conf"
 sed_output=""
 
 # Setup Snorby
