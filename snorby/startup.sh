@@ -28,7 +28,7 @@ printf "%s" "$sed_output" > "/etc/httpd/conf.d/passenger.conf"
 sed_output=""
 
 # PassengerRoot
-passenger_root="$("passenger-config --root")"
+passenger_root="$(passenger-config --root)"
 # Check httpd config for value and remove any existing
 sed_output="$(cat "/etc/httpd/conf/httpd.conf" | sed 's|^PassengerRoot.*$||g')"
 printf "%s\nPassengerRoot %s" "$sed_output" "$passenger_root"  > "/etc/httpd/conf/httpd.conf"
