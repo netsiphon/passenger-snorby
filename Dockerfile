@@ -10,6 +10,7 @@ ENV DB_HOST=mysql
 ENV DB_USER="snorby"
 ENV DB_PASSWORD="password"
 ENV SNORBY_CONFIG="$SNORBY_PATH/config/snorby_config.yml"
+ENV RAILS_ENV=production
 ENV VOLUME_CONTAINER=""
 
 
