@@ -8,7 +8,7 @@ printf "[client]\npassword=%s" "$DB_PASSWORD" > ~/.my.cnf
 chmod 600 ~/.my.cnf
 
 mysql -u $DB_USER -h $DB_HOST -e " \
-CREATE IF NOT EXISTS DATABASE snorby; \
+CREATE DATABASE IF NOT EXISTS snorby; \
 GRANT ALL on snorby.* to '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'; \
 FLUSH PRIVILEGES;"
 
@@ -31,15 +31,33 @@ sed 's|$PASSENGER_ROOT|'$PASSENGER_ROOT'|g')"
 printf "%s" "$sed_output" > "/etc/httpd/conf.d/passenger.conf"
 sed_output=""
 
+# Fix PDF warnings as per README.md
+cd "$SNORBY_PATH"
+sed_output="$(cat "/usr/local/rvm/gems/ruby-*/gems/ezprint-*/lib/ezprint/railtie.rb" | sed 's/\(^.*\)\(Mime::Type.register.*application\/pdf.*$\)/\1if Mime::Type.lookup_by_extension(:pdf) != "application\/pdf"\n\1  \2\n\1end/')"
+printf "%s" "$sed_output" > "/usr/local/rvm/gems/ruby-*/gems/ezprint-*/lib/ezprint/railtie.rb"
+sed_output=""
+sed_output="$(cat "/usr/local/rvm/gems/ruby-*/gems/actionpack-*/lib/action_dispatch/http/mime_types.rb" | sed 's/\(^.*\)\(Mime::Type.register.*application\/pdf.*$\)/\1if Mime::Type.lookup_by_extension(:pdf) != "application\/pdf"\n\1  \2\n\1end/')"
+printf "%s" "$sed_output" > "/usr/local/rvm/gems/ruby-*/gems/actionpack-*/lib/action_dispatch/http/mime_types.rb"
+sed_output=""
+sed_output="$(cat "/usr/local/rvm/gems/ruby-*/gems/railties-*/guides/source/action_controller_overview.textile" | sed 's/\(^.*\)\(Mime::Type.register.*application\/pdf.*$\)/\1if Mime::Type.lookup_by_extension(:pdf) != "application\/pdf"\n\1  \2\n\1end/')"
+printf "%s" "$sed_output" > "/usr/local/rvm/gems/ruby-*/gems/railties-*/guides/source/action_controller_overview.textile" 
+sed_output=""
+
+# Fix Login Issue (No load after login) until patch committed - https://github.com/notnyt/snorby/commit/697ae8abaa9a61b42da4f3849b039b373abf2295
+sed_output="$(cat "$SNORBY_PATH/app/views/layouts/login.html.erb" | sed 's|var snorby_url|var baseuri|g')"
+printf "%s" "$sed_output" > "$SNORBY_PATH/public/app/views/layouts/login.html.erb"
+sed_output=""
+sed_output="$(cat "$SNORBY_PATH/public/javascripts/snorby.js" | sed 's|var snorby_url|var baseuri|g')"
+printf "%s" "$sed_output" > "$SNORBY_PATH/public/javascripts/snorby.js"
+sed_output=""
+
 # Setup Snorby
 cd "$SNORBY_PATH"
+/bin/bash -l -c "bundle exec rake snorby:refresh"
 /bin/bash -l -c "bundle exec rake snorby:setup"
 
 # GO!
 cd "$SNORBY_PATH"
-# Not necessary with Passenger!
-#/bin/bash -l -c "rails server -e production"
-
 # Delayed Jobs start still needed though
 /bin/bash -l -c "rails runner Snorby::Worker.start"
 /bin/bash -l -c "rails runner Snorby Cache Jobs"
