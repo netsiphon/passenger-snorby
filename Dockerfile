@@ -20,7 +20,7 @@ RUN yum update -y
 RUN yum install -y epel-release yum-utils
 RUN \
     yum install -y pygpgme curl wget tar git wkhtmltopdf libxml2-devel libxslt-devel mariadb mariadb-devel && \
-    yum install -y httpd openssl mod_ssl postgresql postgresql-devel
+    yum install -y httpd openssl mod_ssl postgresql postgresql-devel java
 RUN \
     # Passenger Repo
     curl --fail -sSLo /etc/yum.repos.d/passenger.repo https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
