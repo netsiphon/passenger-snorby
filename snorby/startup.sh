@@ -52,7 +52,7 @@ sed_output=""
 sed_output="$(cat "$SNORBY_PATH/app/views/layouts/login.html.erb" | sed 's|var snorby_url|var baseuri|g')"
 printf "%s" "$sed_output" > "$SNORBY_PATH/app/views/layouts/login.html.erb"
 sed_output=""
-sed_output="$(cat "$SNORBY_PATH/public/javascripts/snorby.js" | sed 's|var snorby_url|var baseuri|g')"
+sed_output="$(cat "$SNORBY_PATH/public/javascripts/snorby.js" | sed 's|#user_new|#new_user|g')"
 printf "%s" "$sed_output" > "$SNORBY_PATH/public/javascripts/snorby.js"
 sed_output=""
 
