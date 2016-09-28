@@ -6,8 +6,6 @@ export PATH=$PATH:/usr/local/rvm/rubies/ruby-2.2.1-p85/bin
 # Password storage
 printf "[client]\npassword=%s" "$DB_PASSWORD" > ~/.my.cnf
 chmod 600 ~/.my.cnf
-# WIPE Password variable
-DB_PASSWORD=""
 
 mysql -u $DB_USER -h $DB_HOST -e " \
 CREATE DATABASE IF NOT EXISTS snorby; \
@@ -69,3 +67,6 @@ cd "$SNORBY_PATH"
 # Run HTTPD in CMD in Dockerfile
 /bin/bash -l -c "/usr/sbin/httpd -D FOREGROUND"
 
+
+# WIPE Password variable
+DB_PASSWORD=""
