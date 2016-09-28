@@ -36,8 +36,8 @@ cd "$SNORBY_PATH"
 /bin/bash -l -c "bundle exec rake snorby:setup"
 
 # Fix PDF warnings as per README.md
-sed_output="$(cat /usr/local/rvm/gems/ruby-2.2.1/cache/bundler/gems/ezprint-*/lib/ezprint/railtie.rb | sed 's/\(^.*\)\(Mime::Type.register.*application\/pdf.*$\)/\1if Mime::Type.lookup_by_extension(:pdf) != "application\/pdf"\n\1  \2\n\1end/')"
-printf "%s" "$sed_output" > /usr/local/rvm/gems/ruby-2.2.1/cache/bundler/gems/ezprint-*/lib/ezprint/railtie.rb
+sed_output="$(cat /usr/local/rvm/gems/ruby-2.2.1/bundler/gems/ezprint-*/lib/ezprint/railtie.rb | sed 's/\(^.*\)\(Mime::Type.register.*application\/pdf.*$\)/\1if Mime::Type.lookup_by_extension(:pdf) != "application\/pdf"\n\1  \2\n\1end/')"
+printf "%s" "$sed_output" > /usr/local/rvm/gems/ruby-2.2.1/bundler/gems/ezprint-*/lib/ezprint/railtie.rb
 sed_output=""
 sed_output="$(cat /usr/local/rvm/gems/ruby-2.2.1/gems/actionpack-*/lib/action_dispatch/http/mime_types.rb | sed 's/\(^.*\)\(Mime::Type.register.*application\/pdf.*$\)/\1if Mime::Type.lookup_by_extension(:pdf) != "application\/pdf"\n\1  \2\n\1end/')"
 printf "%s" "$sed_output" > /usr/local/rvm/gems/ruby-2.2.1/gems/actionpack-*/lib/action_dispatch/http/mime_types.rb
