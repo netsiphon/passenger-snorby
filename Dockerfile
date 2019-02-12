@@ -34,13 +34,14 @@ RUN \
     source /etc/profile.d/rvm.sh && \
     /bin/bash -l -c "rvm install $RUBY_VERSION" && \
     /bin/bash -l -c "rvm use $RUBY_VERSION" && \
-    #Ruby Path
+    # Ruby Path
     export PATH=$PATH:/usr/local/rvm/rubies/ruby-$RUBY_VERSION/bin
 RUN /bin/bash -l -c "gem update --system --no-document" && \
     /bin/bash -l -c "gem install bundler --no-document"
 RUN \
     # Get Latest Snorby
-    git clone git://github.com/Snorby/snorby.git /usr/local/snorby && \
+    # git clone git://github.com/Snorby/snorby.git /usr/local/snorby && \
+    git clone https://github.com/netsiphon/snorby.git /usr/local/snorby && \
     cd /usr/local/snorby && \
     /bin/bash -l -c "bundle install --full-index"
 
