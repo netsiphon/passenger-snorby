@@ -1,7 +1,7 @@
 #!/bin/bash
 # https://github.com/Snorby/snorby/blob/master/README.md
 
-export PATH=$PATH:/usr/local/rvm/rubies/ruby-2.2.1-p85/bin
+export PATH=$PATH:/usr/local/rvm/rubies/ruby-$RUBY_VERSION/bin
 
 # Password storage
 printf "[client]\npassword=%s" "$DB_PASSWORD" > ~/.my.cnf
@@ -36,14 +36,14 @@ cd "$SNORBY_PATH"
 /bin/bash -l -c "bundle exec rake snorby:setup"
 
 # Fix PDF warnings as per README.md
-sed_output="$(cat /usr/local/rvm/gems/ruby-2.2.1/bundler/gems/ezprint-*/lib/ezprint/railtie.rb | sed 's/\(^.*\)\(Mime::Type.register.*application\/pdf.*$\)/\1if Mime::Type.lookup_by_extension(:pdf) != "application\/pdf"\n\1  \2\n\1end/')"
-printf "%s" "$sed_output" > /usr/local/rvm/gems/ruby-2.2.1/bundler/gems/ezprint-*/lib/ezprint/railtie.rb
+sed_output="$(cat /usr/local/rvm/gems/ruby-$RUBY_VERSION/bundler/gems/ezprint-*/lib/ezprint/railtie.rb | sed 's/\(^.*\)\(Mime::Type.register.*application\/pdf.*$\)/\1if Mime::Type.lookup_by_extension(:pdf) != "application\/pdf"\n\1  \2\n\1end/')"
+printf "%s" "$sed_output" > /usr/local/rvm/gems/ruby-$RUBY_VERSION/bundler/gems/ezprint-*/lib/ezprint/railtie.rb
 sed_output=""
-sed_output="$(cat /usr/local/rvm/gems/ruby-2.2.1/gems/actionpack-*/lib/action_dispatch/http/mime_types.rb | sed 's/\(^.*\)\(Mime::Type.register.*application\/pdf.*$\)/\1if Mime::Type.lookup_by_extension(:pdf) != "application\/pdf"\n\1  \2\n\1end/')"
-printf "%s" "$sed_output" > /usr/local/rvm/gems/ruby-2.2.1/gems/actionpack-*/lib/action_dispatch/http/mime_types.rb
+sed_output="$(cat /usr/local/rvm/gems/ruby-$RUBY_VERSION/gems/actionpack-*/lib/action_dispatch/http/mime_types.rb | sed 's/\(^.*\)\(Mime::Type.register.*application\/pdf.*$\)/\1if Mime::Type.lookup_by_extension(:pdf) != "application\/pdf"\n\1  \2\n\1end/')"
+printf "%s" "$sed_output" > /usr/local/rvm/gems/ruby-$RUBY_VERSION/gems/actionpack-*/lib/action_dispatch/http/mime_types.rb
 sed_output=""
-sed_output="$(cat /usr/local/rvm/gems/ruby-2.2.1/gems/railties-*/guides/source/action_controller_overview.textile | sed 's/\(^.*\)\(Mime::Type.register.*application\/pdf.*$\)/\1if Mime::Type.lookup_by_extension(:pdf) != "application\/pdf"\n\1  \2\n\1end/')"
-printf "%s" "$sed_output" > /usr/local/rvm/gems/ruby-2.2.1/gems/railties-*/guides/source/action_controller_overview.textile
+sed_output="$(cat /usr/local/rvm/gems/ruby-$RUBY_VERSION/gems/railties-*/guides/source/action_controller_overview.textile | sed 's/\(^.*\)\(Mime::Type.register.*application\/pdf.*$\)/\1if Mime::Type.lookup_by_extension(:pdf) != "application\/pdf"\n\1  \2\n\1end/')"
+printf "%s" "$sed_output" > /usr/local/rvm/gems/ruby-$RUBY_VERSION/gems/railties-*/guides/source/action_controller_overview.textile
 sed_output=""
 
 # Fix Login Issue (No load after login) until patch committed - https://github.com/notnyt/snorby/commit/697ae8abaa9a61b42da4f3849b039b373abf2295
