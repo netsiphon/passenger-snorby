@@ -42,12 +42,12 @@ If you receive an error upon loading the Snorby web interface for the first time
 docker-compose down
 docker-compose up -d
 ```
-![snorby_login](images/snorby_login.png)  
+![snorby_login](https://github.com/netsiphon/passenger-snorby/raw/master/images/snorby_login.png)  
 
 Default Snorby username and password for the web interface are
 snorby@example.com and __snorby__ so please change them immediately on the settings page.
 
-![settings](images/settings.png)  
+![settings](https://github.com/netsiphon/passenger-snorby/raw/master/images/settings.png)  
 
 ### Suggestions?
 
