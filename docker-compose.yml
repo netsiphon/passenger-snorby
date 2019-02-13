@@ -14,10 +14,11 @@ services:
 
   mariadb:
     restart: always
-    image: mariadb:latest
+    image: mariadb:5
     env_file:
      - ./passenger-snorby.env
     ports:
      - "$DB_PORT:$DB_PORT"
     volumes:
      - ./mariadb:/var/lib/mysql
+     - ./my.cnf:/etc/my.cnf
